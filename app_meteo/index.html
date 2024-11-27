@@ -4,11 +4,9 @@
     <meta charset="UTF-8" />
     <link rel="icon" type="image/svg+xml" href="/vite.svg" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <script type="module" src="https://unpkg.com/@googlemaps/extended-component-library@0.6">
-    </script>
-    <script async
-    src="https://maps.googleapis.com/maps/api/js?key=AIzaSyB2gFpI_7F2Fmbp6TKPDKsaKO986I7GDRk&loading=async&libraries=geometry,places&callback=initMap">
-</script>
+    <!-- <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.js"></script> -->
+    <script src="https://cdn.maptiler.com/maptiler-sdk-js/v2.3.0/maptiler-sdk.umd.min.js"></script>
+    <link href="https://cdn.maptiler.com/maptiler-sdk-js/v2.3.0/maptiler-sdk.css" rel="stylesheet" />
     <title>Vite + TS</title>
   </head>
   <body>
@@ -19,23 +17,10 @@
     </datalist>
     <p class="error"></p>
     <div class="weather">
-      <div class="weather__info">
-        <h2 class="weather__city">City</h2>
-        <p class="weather__temp">Temperature</p>
-        <p class="weather__desc">Description</p>
-      </div>
-      <div class="weather__icon">
-        <img src="" alt="Weather icon" />
-      </div>
-
-      <div class="weather__details">
-        <p>Feels like: <span class="weather__feels-like">Feels like</span></p>
-        <p>Humidity: <span class="weather__humidity">Humidity</span></p>
-        <p>Wind: <span class="weather__wind">Wind</span></p>
-      </div>
+      
+      
+     
    </div>
-
-
     <script type="module" src="/src/main.ts"></script>
   </body>
 </html>

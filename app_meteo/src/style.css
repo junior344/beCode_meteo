@@ -1,0 +1,8 @@
+.container{
+  display: flex;
+}
+
+#map { 
+  height: 500px;
+  width: auto;
+}

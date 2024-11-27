@@ -3,6 +3,7 @@ export async function fetchSugestionName(apiUrl: string = '') {
     try{
         const response = await fetch(apiUrl);
         const data = await response.json();  
+        console.log("data :", data);
         suggestion = data;
     }catch(error){
         console.log(error);
