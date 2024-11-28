@@ -13,6 +13,10 @@ const messageError = document.querySelector<HTMLDivElement>(".error");
 const searchInput = document.querySelector<HTMLInputElement>(".city-choice");
 console.log("searchInput :", searchInput);
 const choice = document.querySelector<HTMLDivElement>(".choice");
+
+const now = new Date(); // Jour du mois
+  const hours = now.getHours().toString().padStart(2, "0"); // Heures avec un zéro devant si nécessaire
+  const minutes = now.getMinutes().toString().padStart(2, "0"); // Minutes avec un zéro devant si nécessaire
 // Ensure the Google Maps API is loaded
 
 
@@ -88,6 +92,11 @@ async function displayWeather(lat: number, lon: number) {
   const temp = document.createElement("h2");
   const details =  document.createElement("div");
   details.className= "details";
+  const img = document.createElement("img");
+  img.src = `http://openweathermap.org/img/wn/${list[0].weather[0].icon}.png`;
+  const containerImg = document.createElement("div");
+  containerImg.className = "container_img";
+  img.alt = list[0].weather[0].description;
   const detailsLits = document.createElement("ul");
   const containerGrap = document.createElement("div");
   containerGrap.className = "weather_grap";
@@ -107,11 +116,11 @@ async function displayWeather(lat: number, lon: number) {
   temp.textContent = `${Math.round(list[0].main.temp - 273.15)}°C`;
   const description = document.createElement("p");
   description.className = "description";
-  description.textContent = `ressentie ${Math.round(list[0].main.feels_like - 273.15)}°C.${list[0].weather[0].description}`;
+  description.textContent = `ressentie ${Math.round(list[0].main.feels_like - 273.15)}°C. ${list[0].weather[0].main}`;
    
   const date = document.createElement("p");
   date.className = "date";
-  date.textContent = converDate(list[0].dt_txt);
+  date.textContent = converDate(list[0].dt_txt).split(",")[0]+` ${hours}:${minutes}`;
   divCity.className = "weather_info";
   const title = document.createElement("h1");
   title.className = "title";
@@ -119,16 +128,22 @@ async function displayWeather(lat: number, lon: number) {
 
   containerGrap.appendChild(canvas);
   details.appendChild(detailsLits);
-  divWeatherdata.appendChild(temp);
+  containerImg.appendChild(img);
+  containerImg.appendChild(temp);
+  divWeatherdata.appendChild(containerImg);
+  // divWeatherdata.appendChild(img);
+  // divWeatherdata.appendChild(temp);
   divWeatherdata.appendChild(description); 
   divWeatherdata.appendChild(details);
   divCity.appendChild(date);
   divCity.appendChild(title);
+  divCity.appendChild(divWeatherdata);
   weather?.appendChild(divCity);
-  weather?.appendChild(divWeatherdata);
-  weather?.appendChild(containerGrap);
+  // weather?.appendChild(divWeatherdata);
   weather?.appendChild(map);
-
+  weather?.appendChild(containerGrap);
+  
+  displayWeek(list);
 
   console.log("list :", weather);
   const ctx = document.getElementById('myChart') as HTMLCanvasElement;
@@ -195,6 +210,19 @@ async function displayWeather(lat: number, lon: number) {
   console.log("heures :", heures)
   console.log("date:", dateOnly)
   console.log("ctx :", ctx);
+
+  const sousDates = document.querySelectorAll(".sous_date h3");
+console.log("sousDates :", sousDates);
+const sousLien = document.querySelector('.sous_date ul');
+sousDates.forEach((sousDate) => {
+  console.log("sousDate :", sousDate);
+  sousDate.addEventListener("click", () => {
+    console.log("sousDate :", sousDate);
+    const ul = sousDate.nextElementSibling;
+    ul?.classList.toggle("active");
+    sousDate.classList.toggle("active");
+  });
+});
 }
 
 function converDate (dateStr: string) {
@@ -203,10 +231,84 @@ function converDate (dateStr: string) {
   const jours = ["dim", "lun", "mar", "mer", "jeu", "ven", "sam"];
   const jourAbbr = jours[date.getDay()];
   const jour = date.getDate(); // Jour du mois
-  const heures = date.getHours().toString().padStart(2, '00');
-  const minutes = date.getMinutes().toString().padStart(2, '0');
+  const heures = date.getUTCHours().toString().padStart(2, "0");
+  const minutes = date.getUTCMinutes().toString().padStart(2, "0");
 
 // Assemblage du résultat
   const dateFormattee = `${jourAbbr} ${jour}, ${heures}:${minutes}`;
   return dateFormattee;
 }
+
+
+function displayWeek(lists: any) {
+  console.log("lists :", lists);
+  const showWeek = document.createElement("div");
+  showWeek.className = "week_container";
+  
+  let index = 0;
+  
+  while(index !== 5 && index < lists.length){
+    const dateCurrent = converDate(lists[index].dt_txt).split(",")[0];
+    let dateCampre = dateCurrent;
+    const divDay = document.createElement("div")
+    divDay.className = "sous_date";
+    const ul = document.createElement("ul");
+    const h3 = document.createElement("h3");
+    const day = converDate(lists[index].dt_txt).split(",")[0];
+    while(dateCampre === dateCurrent && index < lists.length) {
+      h3.textContent = day;
+      const li = document.createElement("li")
+      const span = document.createElement("span");
+      span.textContent = converDate(lists[index].dt_txt).split(",")[1];
+      const img = document.createElement("img");
+      img.src = `http://openweathermap.org/img/wn/${lists[index].weather[0].icon}.png`;
+      img.alt = lists[index].weather[0].description;
+      li.textContent = `${Math.round(lists[index].main.temp - 273.15)}°C`;
+      li.appendChild(img);
+      li.appendChild(span);
+      ul.appendChild(li);
+      divDay.appendChild(h3);
+      divDay.appendChild(ul);
+      showWeek.appendChild(divDay);
+      dateCampre = converDate(lists[index].dt_txt).split(",")[0];
+      index++;
+    }
+  //  const date = converDate(lists[index].dt_txt).split(",")[0];
+  //   const divDay = document.createElement("div");
+  //   divDay.className = "day";
+  //   const divDate = document.createElement("div");
+  //   divDate.className = "date";
+  //   divDate.textContent = date;
+  //   const img = document.createElement("img");
+  //   img.src = `http://openweathermap.org/img/wn/${lists[index].weather[0].icon}.png`;
+  //   img.alt = lists[index].weather[0].description;
+  //   const divTemp = document.createElement("div");
+  //   divTemp.className = "temp";
+  //   divTemp.textContent = `${Math.round(lists[index].main.temp - 273.15)}°C`;
+  //   divDay.appendChild(divDate);
+  //   divDay.appendChild(img);
+  //   divDay.appendChild(divTemp);
+  //   showWeek.appendChild(divDay);
+  //   index++;
+  }
+  weather?.appendChild(showWeek);
+}
+
+
+
+// console.log("weather :", 189);
+// document.addEventListener("DOMContentLoaded", () => {
+//   // Sélectionner tous les h3 dans .sous_date
+//   const sousDateHeaders = document.querySelectorAll(".sous_date h3");
+
+//   sousDateHeaders.forEach((header) => {
+//     header.addEventListener("click", () => {
+//       const ul = header.nextElementSibling; // Trouve le <ul> suivant
+//       console.log("ul :", ul);
+//       // Basculer la classe active sur le <ul> et le <h3>
+//       ul?.classList.toggle("active");
+//       header.classList.toggle("active");
+//     });
+//   });
+// });
+
