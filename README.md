@@ -41,7 +41,6 @@ Voici la liste des dépendances utilisées dans ce projet :
 - @maptiler/sdk : SDK pour intégrer les cartes MapTiler.
 - @types/google.maps : Types pour l'API Google Maps.
 - chart.js : Librairie pour créer des graphiques.
-- Dépendances de développement
 
 ## Voici la liste des dépendances de développement utilisées dans ce projet :
 
