@@ -88,4 +88,4 @@ app_meteo/
 - Geoapify API : Pour obtenir les suggestions de villes.
 - MapTiler API : Pour intégrer les cartes.
 # Auteurs
-Mbogle josias[https://www.linkedin.com/in/josias-mbogle/]
+[Mbogle josias](https://www.linkedin.com/in/josias-mbogle/)
