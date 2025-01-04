@@ -42,6 +42,8 @@ Voici la liste des dépendances utilisées dans ce projet :
 - @types/google.maps : Types pour l'API Google Maps.
 - chart.js : Librairie pour créer des graphiques.
 - Dépendances de développement
+=======
+
 
 ## Voici la liste des dépendances de développement utilisées dans ce projet :
 
@@ -89,4 +91,5 @@ app_meteo/
 - Geoapify API : Pour obtenir les suggestions de villes.
 - MapTiler API : Pour intégrer les cartes.
 # Auteurs
-Mbogle josias
+=======
+[Mbogle josias](https://www.linkedin.com/in/josias-mbogle/)
