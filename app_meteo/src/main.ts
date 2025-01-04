@@ -19,10 +19,13 @@ const now = new Date(); // Jour du mois
   const minutes = now.getMinutes().toString().padStart(2, "0"); // Minutes avec un zéro devant si nécessaire
 // Ensure the Google Maps API is loaded
 
+const config = {
+  apiKey: import.meta.env.VITE_API_KEY,
+}
 
 // Fonction pour récupérer les suggestions
 async function  getSuggestionName(query: string) {
- const apiKey = '0ab9fb62180149f1a13a9dbb973b7323'
+ const apiKey = config.apiKey;
  let apiUrL  = `https://api.geoapify.com/v1/geocode/autocomplete?text=${query}&apiKey=${apiKey}`;
   const data = await fetchSugestionName(apiUrL) as { features: { properties: any }[] };
   console.log("data x2 :", data.features[0].properties);
